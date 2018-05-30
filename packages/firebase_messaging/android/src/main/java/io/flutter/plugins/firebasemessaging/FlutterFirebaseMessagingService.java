@@ -25,5 +25,14 @@ public class FlutterFirebaseMessagingService extends FirebaseMessagingService {
     Intent intent = new Intent(ACTION_REMOTE_MESSAGE);
     intent.putExtra(EXTRA_REMOTE_MESSAGE, remoteMessage);
     LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
+
+    //show notification
+    Notification notification = new NotificationCompat.Builder(this)
+            .setContentTitle("title")
+            .setContentText("body")
+            .setSmallIcon(R.mipmap.ic_launcher)
+            .build();
+    NotificationManagerCompat manager = NotificationManagerCompat.from(getApplicationContext());
+    manager.notify(123, notification);
   }
 }
