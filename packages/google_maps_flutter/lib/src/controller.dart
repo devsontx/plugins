@@ -333,7 +333,7 @@ class _GoogleMapsPlatformOverlay extends PlatformOverlay {
 /// other widgets. See [PlatformOverlayController] for caveats and
 /// limitations.
 class GoogleMapOverlay extends StatefulWidget {
-  final GoogleMapOverlayController controller;
+  GoogleMapOverlayController controller;
 
   GoogleMapOverlay({Key key, @required this.controller}) : super(key: key);
 
