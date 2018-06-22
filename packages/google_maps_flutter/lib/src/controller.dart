@@ -338,7 +338,7 @@ class GoogleMapOverlay extends StatefulWidget {
   GoogleMapOverlay({Key key, @required this.controller}) : super(key: key);
 
   @override
-  State<StatefulWidget> createState() => new _GoogleMapOverlayState();
+  State<StatefulWidget> createState() => new GoogleMapOverlayState();
 }
 
 class GoogleMapOverlayState extends State<GoogleMapOverlay> {
