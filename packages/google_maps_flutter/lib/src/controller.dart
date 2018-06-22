@@ -341,7 +341,7 @@ class GoogleMapOverlay extends StatefulWidget {
   State<StatefulWidget> createState() => new _GoogleMapOverlayState();
 }
 
-class _GoogleMapOverlayState extends State<GoogleMapOverlay> {
+class GoogleMapOverlayState extends State<GoogleMapOverlay> {
   @override
   void initState() {
     super.initState();
