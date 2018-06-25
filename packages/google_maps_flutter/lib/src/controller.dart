@@ -73,9 +73,9 @@ class GoogleMapController extends ChangeNotifier {
   // Clears any existing platform-side map instances after hot restart.
   // Sets up method call handlers for receiving map events.
   static Future<void> init() async {
-    await _channel.invokeMethod('init');
+    await channel.invokeMethod('init');
     _controllers.clear();
-    _channel.setMethodCallHandler((MethodCall call) {
+    channel.setMethodCallHandler((MethodCall call) {
       final int mapId = call.arguments['map'];
       final GoogleMapController controller = _controllers[mapId];
       if (controller != null) {
@@ -127,7 +127,7 @@ class GoogleMapController extends ChangeNotifier {
   Future<void> updateMapOptions(GoogleMapOptions changes) async {
     assert(changes != null);
     final int id = await _id;
-    final dynamic json = await _channel.invokeMethod(
+    final dynamic json = await channel.invokeMethod(
       'map#update',
       <String, dynamic>{
         'map': id,
@@ -145,7 +145,7 @@ class GoogleMapController extends ChangeNotifier {
   /// platform side.
   Future<void> animateCamera(CameraUpdate cameraUpdate) async {
     final int id = await _id;
-    await _channel.invokeMethod('camera#animate', <String, dynamic>{
+    await channel.invokeMethod('camera#animate', <String, dynamic>{
       'map': id,
       'cameraUpdate': cameraUpdate._toJson(),
     });
@@ -157,7 +157,7 @@ class GoogleMapController extends ChangeNotifier {
   /// platform side.
   Future<void> moveCamera(CameraUpdate cameraUpdate) async {
     final int id = await _id;
-    await _channel.invokeMethod('camera#move', <String, dynamic>{
+    await channel.invokeMethod('camera#move', <String, dynamic>{
       'map': id,
       'cameraUpdate': cameraUpdate._toJson(),
     });
@@ -174,7 +174,7 @@ class GoogleMapController extends ChangeNotifier {
     final int id = await _id;
     final MarkerOptions effectiveOptions =
         MarkerOptions.defaultOptions.copyWith(options);
-    final String markerId = await _channel.invokeMethod(
+    final String markerId = await channel.invokeMethod(
       'marker#add',
       <String, dynamic>{
         'map': id,
@@ -199,7 +199,7 @@ class GoogleMapController extends ChangeNotifier {
     assert(_markers[marker._id] == marker);
     assert(changes != null);
     final int id = await _id;
-    await _channel.invokeMethod('marker#update', <String, dynamic>{
+    await channel.invokeMethod('marker#update', <String, dynamic>{
       'map': id,
       'marker': marker._id,
       'options': changes._toJson(),
@@ -219,7 +219,7 @@ class GoogleMapController extends ChangeNotifier {
     assert(marker != null);
     assert(_markers[marker._id] == marker);
     final int id = await _id;
-    await _channel.invokeMethod('marker#remove', <String, dynamic>{
+    await channel.invokeMethod('marker#remove', <String, dynamic>{
       'map': id,
       'marker': marker._id,
     });
@@ -284,7 +284,7 @@ class _GoogleMapsPlatformOverlay extends PlatformOverlay {
 
   @override
   Future<int> create(Size size) {
-    _textureId.complete(_channel.invokeMethod('map#create', <String, dynamic>{
+    _textureId.complete(channel.invokeMethod('map#create', <String, dynamic>{
       'width': size.width,
       'height': size.height,
       'options': options._toJson(),
@@ -295,7 +295,7 @@ class _GoogleMapsPlatformOverlay extends PlatformOverlay {
   @override
   Future<void> show(Offset offset) async {
     final int id = await _textureId.future;
-    _channel.invokeMethod('map#show', <String, dynamic>{
+    channel.invokeMethod('map#show', <String, dynamic>{
       'map': id,
       'x': offset.dx,
       'y': offset.dy,
@@ -305,7 +305,7 @@ class _GoogleMapsPlatformOverlay extends PlatformOverlay {
   @override
   Future<void> hide() async {
     final int id = await _textureId.future;
-    _channel.invokeMethod('map#hide', <String, dynamic>{
+    channel.invokeMethod('map#hide', <String, dynamic>{
       'map': id,
     });
   }
@@ -313,7 +313,7 @@ class _GoogleMapsPlatformOverlay extends PlatformOverlay {
   @override
   Future<void> dispose() async {
     final int id = await _textureId.future;
-    _channel.invokeMethod('map#dispose', <String, dynamic>{
+    channel.invokeMethod('map#dispose', <String, dynamic>{
       'map': id,
     });
   }
