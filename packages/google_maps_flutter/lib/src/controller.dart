@@ -226,6 +226,23 @@ class GoogleMapController extends ChangeNotifier {
     _markers.remove(marker._id);
     notifyListeners();
   }
+    
+  /// Focus on the specified [marker] from the map. The marker must be a current
+  ///
+  /// Change listeners are notified once the marker has been focused on the
+  /// platform side.
+  ///
+  /// The returned [Future] completes once listeners have been notified.
+  Future<void> selectMarker(Marker marker) async {
+    assert(marker != null);
+    assert(_markers[marker._id] == marker);
+    final int id = await _id;
+    await channel.invokeMethod('marker#onTap', <String, dynamic>{
+      'map': id,
+      'marker': marker._id
+    });
+    notifyListeners();
+  }
 }
 
 /// Controller pair for a GoogleMap instance that is integrated as a
