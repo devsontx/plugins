@@ -4,7 +4,7 @@
 
 part of google_maps_flutter;
 
-final MethodChannel _channel =
+final MethodChannel channel =
     const MethodChannel('plugins.flutter.io/google_maps');
 
 /// Controller for a single GoogleMap instance running on the host platform.
